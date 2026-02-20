@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Employee Compensation Form</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous"
+  />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <style>
+    .hidden { display: none !important; }
+    #loadingSpinner{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.7);backdrop-filter:blur(2px);z-index:1050;pointer-events:all}
+    #loadingSpinner.hidden{display:none}
+  </style>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"
+  ></script>
+</head>
+<body class="bg-light">
+  <div class="container mt-5 mb-5">
+    <div class="d-flex flex-column position-relative" style="min-height: 80vh;">
+      <div id="loadingSpinner" class="d-flex justify-content-center hidden">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+
+      <!-- Main Error Container -->
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-10 col-xl-9">
+          <div id="errorContainer" class="alert alert-danger hidden" role="alert"></div>
+        </div>
+      </div>
+
+      <!-- Scrollable content area -->
+      <div id="compensationForm" class="flex-grow-1">
+        <!-- User Inputs - Part A -->
+        <fieldset id="userInputsA">
+          <div class="row justify-content-center">
+            <div class="col-12 col-lg-10 col-xl-9">
+              <div class="mb-5">
+                <h2 class="mb-2" id="formTitle" style="color: #2c3e50; font-weight: 600;">Small Business Retirement Plan Start-Up Tax Credit Calculator</h2>
+              </div>
+
+              <div class="card shadow-sm mb-4">
+                <div class="card-body p-4">
+                  <h3 id="employeeFormHeading" class="h5 mb-3" style="color: #00A86B;">Add Your Employees</h3>
+
+                  <div class="row gy-2 gx-3 mb-3" role="region" aria-labelledby="employeeFormHeading">
+                    <div class="col-md-4">
+                      <label class="form-label" for="firstName">First name</label>
+                      <input id="firstName" class="form-control" autocomplete="given-name">
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label" for="lastName">Last name</label>
+                      <input id="lastName" class="form-control" autocomplete="family-name">
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label" for="comp">Annual compensation</label>
+                      <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input id="comp" type="number" min="0" step="0.01" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-1 d-grid align-self-end">
+                      <button id="btnAdd" type="button" class="btn" style="background-color: #00A86B; color: white;" aria-label="Add employee">Add</button>
+                    </div>
+                  </div>
+
+                  <div class="table-responsive">
+                    <table id="employeesTable" class="table table-striped mb-0">
+                      <caption class="visually-hidden">Added employees</caption>
+                      <thead>
+                        <tr>
+                          <th scope="col">First name</th>
+                          <th scope="col">Last name</th>
+                          <th scope="col">Annual compensation</th>
+                          <th scope="col" style="width: 100px;"></th>
+                        </tr>
+                      </thead>
+                      <tbody id="empTableInputs"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- User Inputs - Part B -->
+        <fieldset id="userInputsB" class="hidden">
+          <div class="row justify-content-center">
+            <div class="col-12 col-lg-10 col-xl-9">
+              <div class="mb-5">
+                <h2 class="mb-2" style="color: #2c3e50; font-weight: 600;">Small Business Retirement Plan Start-Up Tax Credit Calculator</h2>
+              </div>
+
+              <div class="card shadow-sm mb-4">
+                <div class="card-body p-4">
+                  <h3 class="h5 mb-4" style="color: #00A86B;">Plan Details</h3>
+
+                  <div class="mb-3">
+                    <label for="inputB" class="form-label"><b>A:</b> Anticipated initial cost for plan establishment</label>
+                    <div class="input-group">
+                      <span class="input-group-text">$</span>
+                      <input type="number" class="form-control" id="inputB" name="inputB" value="0" min="0" required aria-describedby="inputBHelp">
+                    </div>
+                    <div id="inputBHelp" class="form-text">Enter the initial cost. Default is $0.</div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="inputC" class="form-label"><b>B:</b> Anticipated annual plan administration/recordkeeping fee</label>
+                    <div class="input-group">
+                      <span class="input-group-text">$</span>
+                      <input type="number" class="form-control" id="inputC" name="inputC" value="0" min="0" required aria-describedby="inputCHelp">
+                    </div>
+                    <div id="inputCHelp" class="form-text">Enter the annual fee. Default is $0.</div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="inputD" class="form-label"><b>C:</b> Anticipated annual per-participant fees</label>
+                    <div class="input-group">
+                      <span class="input-group-text">$</span>
+                      <input type="number" class="form-control" id="inputD" name="inputD" value="0" min="0" required aria-describedby="inputDHelp">
+                    </div>
+                    <div id="inputDHelp" class="form-text">Enter the per-participant fee. Default is $0.</div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="inputE" class="form-label"><b>D:</b> Anticipated annual enrollment/education fee</label>
+                    <div class="input-group">
+                      <span class="input-group-text">$</span>
+                      <input type="number" class="form-control" id="inputE" name="inputE" value="0" min="0" required aria-describedby="inputEHelp">
+                    </div>
+                    <div id="inputEHelp" class="form-text">Enter the enrollment fee. Default is $0.</div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="inputF" class="form-label"><b>E:</b> Will plan include auto-enrollment?</label>
+                    <select class="form-select" id="inputF" name="inputF" aria-describedby="inputFHelp">
+                      <option value="Yes">Yes</option>
+                      <option value="No" selected>No</option>
+                    </select>
+                    <div id="inputFHelp" class="form-text">Select Yes for auto-enrollment; otherwise, No.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <!-- Action bars -->
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-10 col-xl-9">
+          <div id="actionBarA" class="mt-4">
+            <button type="button" class="btn w-100" style="background-color: #00A86B; color: white;" onclick="nextSection()">Next</button>
+          </div>
+
+          <div id="actionBarB" class="mt-4 hidden">
+            <div class="d-flex gap-2">
+              <button type="button" class="btn btn-secondary flex-fill" onclick="previousSection()">Back</button>
+              <button type="button" class="btn flex-fill" style="background-color: #00A86B; color: white;" onclick="submitForm()">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calculations/Results Section -->
+      <div id="calculations" class="hidden">
+        <div class="row justify-content-center">
+          <div class="col-12 col-lg-10 col-xl-9">
+            <div class="text-center mb-4">
+              <h5 class="fw-semi-bold mb-0">You're potentially eligible for <span style="color: #00A86B;" id="totalTaxCredits">$0</span> in tax credits.</h5>
+            </div>
+
+            <!-- Adjustment Controls -->
+            <div class="card shadow-sm mb-4">
+              <div class="card-body p-4">
+                <h5 class="text-center mb-4" style="color: #00A86B;">Adjust to fine tune your cost-benefit projections</h5>
+
+                <div class="row align-items-center">
+                  <!-- Left side: Contribution percentage -->
+                  <div class="col-md-6">
+                    <div class="text-center">
+                      <div class="mb-2">
+                        <small class="fw-bold">CONTRIBUTION PERCENTAGE</small>
+                      </div>
+                      <div class="d-flex align-items-center justify-content-center gap-2">
+                        <button type="button" class="btn btn-sm rounded-circle" id="contrib_minus" style="width: 35px; height: 35px; background-color: #00A86B; color: white;">−</button>
+                        <input type="number" class="form-control text-center" id="inputA" value="3" min="1" max="25" style="width: 80px; font-size: 1.5rem; font-weight: bold;" readonly>
+                        <span style="font-size: 1.5rem; font-weight: bold;">%</span>
+                        <button type="button" class="btn btn-sm rounded-circle" id="contrib_plus" style="width: 35px; height: 35px; background-color: #00A86B; color: white;">+</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Right side: Time Frame slider -->
+                  <div class="col-md-6 mt-3 mt-md-0 text-center">
+                    <label class="mb-2 fw-bold">Time Frame (Years)</label>
+                    <div class="position-relative" style="padding-top: 40px;">
+                      <div id="time_frame_display" class="position-absolute" style="left: 50%; transform: translateX(-50%); top: 0; font-weight: bold; font-size: 1.1rem;">3</div>
+                      <input type="range" class="form-range" id="time_frame" min="1" max="5" value="3" step="1">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cost Benefit Projection -->
+            <div class="p-4 mb-4" style="background: linear-gradient(135deg, #00d084 0%, #00a86b 100%); border-radius: 15px;">
+              <div class="text-white border-0 mb-3">
+                <h5 class="mb-0 text-center fw-bold">COST BENEFIT PROJECTION</h5>
+              </div>
+              <div class="text-white">
+
+                <!-- Funding Section -->
+                <div class="mb-3">
+                  <h6 class="fw-bold mb-2">Funding</h6>
+                  <div class="d-flex justify-content-between ps-3 mb-1">
+                    <span>Plan Contributions</span>
+                    <span id="employerPlanContributions-1">$0</span>
+                  </div>
+                  <div class="d-flex justify-content-between ps-3 mb-1">
+                    <span>Tax Credits</span>
+                    <span id="employerFundingTaxCredits">-$0</span>
+                  </div>
+                </div>
+
+                <!-- Net Funding Cost -->
+                <div class="mb-3 pb-3 border-bottom border-white">
+                  <div class="d-flex justify-content-between">
+                    <h6 class="fw-bold mb-0">Net Funding Cost to Business</h6>
+                    <h6 class="fw-bold mb-0" id="netFundingCost">$0</h6>
+                  </div>
+                </div>
+
+                <!-- Administration Section -->
+                <div class="mb-3">
+                  <h6 class="fw-bold mb-2">Administration</h6>
+                  <div class="d-flex justify-content-between ps-3 mb-1">
+                    <span>Admin Costs</span>
+                    <span id="adminCost">$0</span>
+                  </div>
+                  <div class="d-flex justify-content-between ps-3 mb-1">
+                    <span>Tax Credits</span>
+                    <span id="adminTaxCredits">-$0</span>
+                  </div>
+                </div>
+
+                <!-- Net Admin Cost -->
+                <div class="mb-3 pb-3 border-bottom border-white">
+                  <div class="d-flex justify-content-between">
+                    <h6 class="fw-bold mb-0">Net Admin Cost to Business</h6>
+                    <h6 class="fw-bold mb-0" id="netAdminCost">$0</h6>
+                  </div>
+                </div>
+
+                <!-- Total Out of Pocket -->
+                <div>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="fw-bold mb-0">Total Out of Pocket</h5>
+                    <h4 class="fw-bold mb-0" id="totalOutOfPocket-1">$0</h4>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="text-center">
+              <h5 class="fw-semi-bold mb-0">For <span id="totalOutOfPocket-2" style="color: #00A86B;">$0</span> out of pocket, you can provide <span id="employerPlanContributions-2" style="color: #00A86B;">$0</span> of benefits for your employees.</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Results action bar -->
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-10 col-xl-9">
+          <div id="actionBarCalc" class="mt-4 hidden">
+            <button type="button" class="btn btn-secondary w-100" onclick="previousSection()">Back</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="./src/js/main.js"></script>
+  <script></script>
+</body>
+</html>
