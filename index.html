@@ -16,6 +16,103 @@
     .hidden { display: none !important; }
     #loadingSpinner{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.7);backdrop-filter:blur(2px);z-index:1050;pointer-events:all}
     #loadingSpinner.hidden{display:none}
+     /* ── Base ── */
+    body { background:#f8fafc; font-family:'Inter',system-ui,sans-serif; }
+
+    /* ── View Toggle ── */
+    .view-toggle { background:#e2e8f0; border-radius:8px; padding:3px; display:inline-flex; gap:2px; }
+    .view-toggle button { border:none; border-radius:6px; padding:6px 20px; font-size:13px; font-weight:600; cursor:pointer; transition:all .15s; background:transparent; color:#64748b; }
+    .view-toggle button.active { background:#fff; color:#2563eb; box-shadow:0 1px 4px rgba(0,0,0,.1); }
+
+    /* ── Cards ── */
+    .tool-card { background:#fff; border:1px solid #e2e8f0; border-radius:12px; box-shadow:0 1px 4px rgba(0,0,0,.07); }
+    .section-label { font-size:11px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:.08em; padding:14px 0 6px; }
+
+    /* ── Sliders ── */
+    input[type=range] { accent-color:#2563eb; cursor:pointer; }
+    .slider-value { font-size:22px; font-weight:700; color:#2563eb; }
+    .slider-bound { font-size:13px; color:#94a3b8; }
+
+    /* ── Line items ── */
+    .line-item { display:flex; justify-content:space-between; align-items:center; padding:5px 0 5px 14px; border-bottom:1px solid #f1f5f9; font-size:14px; color:#475569; }
+    .line-item.bold { padding-left:0; font-weight:700; color:#0f172a; border-bottom:none; border-top:1px solid #cbd5e1; padding-top:10px; margin-top:4px; }
+    .line-item .credit { color:#16a34a; }
+    .line-total { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-top:1px solid #e2e8f0; font-weight:700; font-size:14px; color:#0f172a; }
+
+    /* ── Grand total ── */
+    .grand-total { display:flex; justify-content:space-between; align-items:center; border-top:2px solid #0f172a; margin-top:10px; padding-top:12px; }
+
+    /* ── Detail links ── */
+    .detail-link { background:none; border:none; color:#2563eb; font-size:12px; font-weight:600; text-decoration:underline; cursor:pointer; padding:2px 0; }
+
+    /* ── Callout ── */
+    .callout { background:#eff6ff; border:1px solid #bfdbfe; border-radius:12px; }
+    .callout p { color:#1e40af; font-size:14px; line-height:1.7; margin:0; }
+
+    /* ── Equation Bar (Advisor) ── */
+    .eq-bar { display:flex; align-items:stretch; border:1px solid #e2e8f0; border-radius:10px; overflow:hidden; background:#f8fafc; margin-bottom:20px; }
+    .eq-cell { flex:1; padding:16px 20px; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+    .eq-cell.gross { background:#f8fafc; }
+    .eq-cell.credit { background:#f0fdf4; }
+    .eq-cell.net { background:#eff6ff; }
+    .eq-op { background:#f1f5f9; padding:12px 10px; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:300; color:#94a3b8; min-width:36px; }
+    .eq-label { font-size:11px; font-weight:600; color:#94a3b8; text-transform:uppercase; letter-spacing:.07em; margin-bottom:4px; white-space:nowrap; }
+    .eq-value { font-size:20px; font-weight:800; }
+    .eq-cell.gross .eq-value { color:#475569; }
+    .eq-cell.credit .eq-value { color:#16a34a; }
+    .eq-cell.net .eq-value { color:#2563eb; }
+
+    /* ── Progressive Reveal (Client) ── */
+    .reveal-card { border-radius:10px; padding:14px 20px; display:flex; justify-content:space-between; align-items:center; border:1px solid #e2e8f0; transition:opacity .5s ease, transform .5s ease; }
+    .reveal-card.hidden { opacity:0; transform:translateY(12px); pointer-events:none; }
+    .reveal-card.visible { opacity:1; transform:translateY(0); }
+    .reveal-card.gross-card { background:#f8fafc; }
+    .reveal-card.credit-card { background:#f0fdf4; border-color:#bbf7d0; }
+    .reveal-card.net-card { background:#eff6ff; border-color:#bfdbfe; }
+    .reveal-label { font-size:14px; color:#475569; font-weight:500; }
+    .reveal-value { font-size:18px; font-weight:800; }
+    .reveal-value.gross-val { color:#475569; }
+    .reveal-value.credit-val { color:#16a34a; }
+    .reveal-value.net-val { color:#2563eb; font-size:22px; }
+    .reveal-net-label { font-size:14px; color:#1e40af; font-weight:700; }
+    .reveal-divider { height:2px; background:#cbd5e1; border-radius:1px; transition:opacity .4s ease; }
+    .reveal-divider.hidden { opacity:0; }
+    .reveal-divider.visible { opacity:1; }
+    .reveal-op { font-size:22px; font-weight:300; color:#94a3b8; margin-left:8px; min-width:24px; }
+
+    /* ── Slide Panel ── */
+    .panel-backdrop { position:fixed; inset:0; background:rgba(15,23,42,.4); z-index:40; display:none; }
+    .panel-backdrop.open { display:block; }
+    .slide-panel { position:fixed; top:0; right:0; height:100%; width:min(600px,100vw); background:#f8fafc; z-index:50; box-shadow:-4px 0 24px rgba(0,0,0,.12); transform:translateX(100%); transition:transform .3s cubic-bezier(.4,0,.2,1); display:flex; flex-direction:column; }
+    .slide-panel.open { transform:translateX(0); }
+    .panel-header { background:#fff; border-bottom:1px solid #e2e8f0; padding:20px 24px; flex-shrink:0; }
+    .panel-body { overflow-y:auto; flex:1; padding:20px 24px; }
+    .panel-title { font-size:18px; font-weight:800; color:#0f172a; }
+    .panel-subtitle { font-size:13px; color:#64748b; margin-top:2px; }
+    .panel-close { background:none; border:none; font-size:22px; color:#94a3b8; cursor:pointer; line-height:1; padding:4px; }
+
+    /* ── Year-by-year table ── */
+    .yr-table th { font-size:12px; font-weight:700; color:#64748b; background:#f1f5f9; border-bottom:2px solid #e2e8f0; white-space:nowrap; text-align:right; padding:8px 10px; }
+    .yr-table th:first-child { text-align:left; }
+    .yr-table td { font-size:13px; color:#475569; text-align:right; padding:7px 10px; border-bottom:1px solid #f1f5f9; }
+    .yr-table td:first-child { text-align:left; font-weight:600; color:#0f172a; }
+    .yr-table tr:nth-child(even) td { background:#fafafa; }
+    .yr-table tfoot td { background:#f1f5f9; font-weight:700; color:#0f172a; font-size:13px; }
+    .yr-table .credit-col { color:#16a34a; }
+    .yr-table .net-col { color:#2563eb; font-weight:700; }
+
+    /* ── Tooltip ── */
+    .info-btn { width:15px; height:15px; border-radius:50%; background:#94a3b8; color:#fff; border:none; cursor:pointer; font-size:10px; font-weight:bold; line-height:15px; text-align:center; padding:0; display:inline-block; margin-left:4px; vertical-align:middle; }
+    .tooltip-box { position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%); background:#1e293b; color:#f1f5f9; font-size:12px; padding:8px 10px; border-radius:6px; width:220px; z-index:200; box-shadow:0 4px 12px rgba(0,0,0,.2); line-height:1.5; display:none; pointer-events:none; }
+    .tooltip-box::after { content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:5px solid transparent; border-top-color:#1e293b; }
+    .info-wrap { position:relative; display:inline-block; }
+    .info-wrap:hover .tooltip-box,
+    .info-wrap:focus-within .tooltip-box { display:block; }
+
+    /* ── Summary rows (client view) ── */
+    .summary-row { display:flex; justify-content:space-between; align-items:center; padding:12px 16px; background:#f8fafc; border-radius:8px; border:1px solid #e2e8f0; }
+    .summary-row .s-label { font-size:14px; color:#475569; font-weight:500; }
+    .summary-row .s-value { font-size:18px; font-weight:800; }
   </style>
   <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -51,7 +148,7 @@
 
               <div class="card shadow-sm mb-4">
                 <div class="card-body p-4">
-                  <h3 id="employeeFormHeading" class="h5 mb-3" style="color: #00A86B;">Add Your Employees</h3>
+                  <h3 id="employeeFormHeading" class="text-uppercase fw-semibold mb-2" style="font-size:14px;color:#2563eb;letter-spacing:.08em;" >Add Your Employees</h3>
 
                   <div class="row gy-2 gx-3 mb-3" role="region" aria-labelledby="employeeFormHeading">
                     <div class="col-md-4">
@@ -70,7 +167,7 @@
                       </div>
                     </div>
                     <div class="col-md-1 d-grid align-self-end">
-                      <button id="btnAdd" type="button" class="btn" style="background-color: #00A86B; color: white;" aria-label="Add employee">Add</button>
+                      <button id="btnAdd" type="button" class="btn btn-primary" aria-label="Add employee">Enter</button>
                     </div>
                   </div>
 
@@ -104,7 +201,7 @@
 
               <div class="card shadow-sm mb-4">
                 <div class="card-body p-4">
-                  <h3 class="h5 mb-4" style="color: #00A86B;">Plan Details</h3>
+                  <h3 class="text-uppercase fw-semibold mb-2" style="font-size:14px;color:#2563eb;letter-spacing:.08em;">Plan Details</h3>
 
                   <div class="mb-3">
                     <label for="inputB" class="form-label"><b>A:</b> Anticipated initial cost for plan establishment</label>
@@ -161,134 +258,386 @@
       <div class="row justify-content-center">
         <div class="col-12 col-lg-10 col-xl-9">
           <div id="actionBarA" class="mt-4">
-            <button type="button" class="btn w-100" style="background-color: #00A86B; color: white;" onclick="nextSection()">Next</button>
+            <button type="button"  class="btn btn-primary fw-bold flex-grow-1 py-3" style="font-size:15px;box-shadow:0 2px 8px rgba(37,99,235,.3);" onclick="nextSection()">Next</button>
           </div>
 
           <div id="actionBarB" class="mt-4 hidden">
             <div class="d-flex gap-2">
-              <button type="button" class="btn btn-secondary flex-fill" onclick="previousSection()">Back</button>
-              <button type="button" class="btn flex-fill" style="background-color: #00A86B; color: white;" onclick="submitForm()">Submit</button>
+              <button type="button" class="btn btn-outline-secondary fw-semibold py-3" style="min-width:140px;font-size:15px;" onclick="previousSection()">← Back</button>
+              <button type="button"  class="btn btn-primary fw-bold flex-grow-1 py-3" style="font-size:15px;box-shadow:0 2px 8px rgba(37,99,235,.3);" onclick="submitForm()">Submit</button>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Calculations/Results Section -->
-      <div id="calculations" class="hidden">
-        <div class="row justify-content-center">
-          <div class="col-12 col-lg-10 col-xl-9">
-            <div class="text-center mb-4">
-              <h5 class="fw-semi-bold mb-0">You're potentially eligible for <span style="color: #00A86B;" id="totalTaxCredits">$0</span> in tax credits.</h5>
-            </div>
+<div id="calculations" class="container py-4" style="max-width:680px;" id="results-page">
 
-            <!-- Adjustment Controls -->
-            <div class="card shadow-sm mb-4">
-              <div class="card-body p-4">
-                <h5 class="text-center mb-4" style="color: #00A86B;">Adjust to fine tune your cost-benefit projections</h5>
+  <!-- Header -->
+  <div class="text-center mb-4">
+    <div class="text-uppercase fw-semibold mb-2" style="font-size:14px;color:#2563eb;letter-spacing:.08em;">Tax Credit Estimate</div>
+    <h1 class="fw-bold" style="font-size:28px;color:#0f172a;">
+      You may be eligible for
+      <span style="color:#2563eb;" id="hdr-total-credits">$0</span>
+      in tax credits
+    </h1>
+    <p class="mt-2 mb-0" style="font-size:14px;color:#94a3b8;" id="hdr-subtitle">Based on 5 employees · 3-year projection · 3% contribution rate</p>
+  </div>
 
-                <div class="row align-items-center">
-                  <!-- Left side: Contribution percentage -->
-                  <div class="col-md-6">
-                    <div class="text-center">
-                      <div class="mb-2">
-                        <small class="fw-bold">CONTRIBUTION PERCENTAGE</small>
-                      </div>
-                      <div class="d-flex align-items-center justify-content-center gap-2">
-                        <button type="button" class="btn btn-sm rounded-circle" id="contrib_minus" style="width: 35px; height: 35px; background-color: #00A86B; color: white;">−</button>
-                        <input type="number" class="form-control text-center" id="inputA" value="3" min="1" max="25" style="width: 80px; font-size: 1.5rem; font-weight: bold;" readonly>
-                        <span style="font-size: 1.5rem; font-weight: bold;">%</span>
-                        <button type="button" class="btn btn-sm rounded-circle" id="contrib_plus" style="width: 35px; height: 35px; background-color: #00A86B; color: white;">+</button>
-                      </div>
-                    </div>
-                  </div>
+  <!-- View Toggle -->
+  <div class="d-flex justify-content-center mb-4">
+    <div class="view-toggle">
+      <button class="active" id="btn-advisor" onclick="setView('advisor')">Advisor View</button>
+      <button id="btn-owner" onclick="setView('owner')">Client View</button>
+    </div>
+  </div>
 
-                  <!-- Right side: Time Frame slider -->
-                  <div class="col-md-6 mt-3 mt-md-0 text-center">
-                    <label class="mb-2 fw-bold">Time Frame (Years)</label>
-                    <div class="position-relative" style="padding-top: 40px;">
-                      <div id="time_frame_display" class="position-absolute" style="left: 50%; transform: translateX(-50%); top: 0; font-weight: bold; font-size: 1.1rem;">3</div>
-                      <input type="range" class="form-range" id="time_frame" min="1" max="5" value="3" step="1">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+  <!-- Adjust Projections Card -->
+  <div class="tool-card p-4 mb-3">
+    <div class="section-label mt-0">Adjust Projections</div>
+    <div class="row g-4 mt-1">
 
-            <!-- Cost Benefit Projection -->
-            <div class="p-4 mb-4" style="background: linear-gradient(135deg, #00d084 0%, #00a86b 100%); border-radius: 15px;">
-              <div class="text-white border-0 mb-3">
-                <h5 class="mb-0 text-center fw-bold">COST BENEFIT PROJECTION</h5>
-              </div>
-              <div class="text-white">
+      <!-- Contribution Slider -->
+      <div class="col-12 col-sm-6">
+        <div class="d-flex align-items-center mb-2">
+          <span class="text-uppercase fw-semibold" style="font-size:13px;color:#475569;letter-spacing:.05em;">Employer Contribution</span>
+          <span class="info-wrap ms-1">
+            <button class="info-btn">i</button>
+            <div class="tooltip-box">The percentage of each employee's salary the employer contributes annually.</div>
+          </span>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <span class="slider-bound">1%</span>
+          <input type="range" class="form-range flex-grow-1" min="1" max="10" step="1" value="3" id="contrib-slider" oninput="onSliderChange()" />
+          <span class="slider-bound">10%</span>
+        </div>
+        <div class="text-center mt-1"><span class="slider-value" id="contrib-display">3%</span></div>
+      </div>
 
-                <!-- Funding Section -->
-                <div class="mb-3">
-                  <h6 class="fw-bold mb-2">Funding</h6>
-                  <div class="d-flex justify-content-between ps-3 mb-1">
-                    <span>Plan Contributions</span>
-                    <span id="employerPlanContributions-1">$0</span>
-                  </div>
-                  <div class="d-flex justify-content-between ps-3 mb-1">
-                    <span>Tax Credits</span>
-                    <span id="employerFundingTaxCredits">-$0</span>
-                  </div>
-                </div>
+      <!-- Time Frame Slider -->
+      <div class="col-12 col-sm-6">
+        <div class="d-flex align-items-center mb-2">
+          <span class="text-uppercase fw-semibold" style="font-size:13px;color:#475569;letter-spacing:.05em;">Time Frame</span>
+          <span class="info-wrap ms-1">
+            <button class="info-btn">i</button>
+            <div class="tooltip-box">SECURE 2.0 credits apply for up to 3–5 years depending on credit type.</div>
+          </span>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <span class="slider-bound">1 yr</span>
+          <input type="range" class="form-range flex-grow-1" min="1" max="5" step="1" value="3" id="years-slider" oninput="onSliderChange()" />
+          <span class="slider-bound">5 yrs</span>
+        </div>
+        <div class="text-center mt-1"><span class="slider-value" id="years-display">3 yrs</span></div>
+      </div>
+    </div>
+  </div>
 
-                <!-- Net Funding Cost -->
-                <div class="mb-3 pb-3 border-bottom border-white">
-                  <div class="d-flex justify-content-between">
-                    <h6 class="fw-bold mb-0">Net Funding Cost to Business</h6>
-                    <h6 class="fw-bold mb-0" id="netFundingCost">$0</h6>
-                  </div>
-                </div>
+  <!-- Cost-Benefit Summary Card -->
+  <div class="tool-card p-4 mb-3">
+    <div class="section-label mt-0">Cost-Benefit Summary</div>
 
-                <!-- Administration Section -->
-                <div class="mb-3">
-                  <h6 class="fw-bold mb-2">Administration</h6>
-                  <div class="d-flex justify-content-between ps-3 mb-1">
-                    <span>Admin Costs</span>
-                    <span id="adminCost">$0</span>
-                  </div>
-                  <div class="d-flex justify-content-between ps-3 mb-1">
-                    <span>Tax Credits</span>
-                    <span id="adminTaxCredits">-$0</span>
-                  </div>
-                </div>
+    <!-- ADVISOR VIEW -->
+    <div id="advisor-view">
 
-                <!-- Net Admin Cost -->
-                <div class="mb-3 pb-3 border-bottom border-white">
-                  <div class="d-flex justify-content-between">
-                    <h6 class="fw-bold mb-0">Net Admin Cost to Business</h6>
-                    <h6 class="fw-bold mb-0" id="netAdminCost">$0</h6>
-                  </div>
-                </div>
+      <!-- Funding section -->
+      <div class="d-flex justify-content-between align-items-center py-1">
+        <span class="text-uppercase fw-bold" style="font-size:12px;color:#94a3b8;letter-spacing:.06em;">Funding</span>
+        <button class="detail-link" onclick="openPanel('funding')">View funding detail →</button>
+      </div>
+      <div class="line-item">
+        <div class="d-flex align-items-center">
+          Gross Employer Contributions
+          <span class="info-wrap"><button class="info-btn">i</button><div class="tooltip-box">Total employer contributions to employee retirement accounts.</div></span>
+        </div>
+        <span id="adv-gross-contrib">$0</span>
+      </div>
+      <div class="line-item">
+        <div class="d-flex align-items-center">
+          SECURE 2.0 Funding Credit
+          <span class="info-wrap"><button class="info-btn">i</button><div class="tooltip-box">Up to $1,000/employee/yr, phased over 5 years.</div></span>
+        </div>
+        <span class="credit" id="adv-funding-credit">-$0</span>
+      </div>
+      <div class="line-total"><span>Net Funding Cost</span><span id="adv-net-funding">$0</span></div>
 
-                <!-- Total Out of Pocket -->
-                <div>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <h5 class="fw-bold mb-0">Total Out of Pocket</h5>
-                    <h4 class="fw-bold mb-0" id="totalOutOfPocket-1">$0</h4>
-                  </div>
-                </div>
+      <!-- Admin section -->
+      <div class="d-flex justify-content-between align-items-center mt-3 py-1">
+        <span class="text-uppercase fw-bold" style="font-size:12px;color:#94a3b8;letter-spacing:.06em;">Administration</span>
+        <button class="detail-link" onclick="openPanel('admin')">View admin detail →</button>
+      </div>
+      <div class="line-item">
+        <div class="d-flex align-items-center">
+          Gross Admin Costs
+          <span class="info-wrap"><button class="info-btn">i</button><div class="tooltip-box">Setup, recordkeeping, per-participant, and enrollment fees.</div></span>
+        </div>
+        <span id="adv-gross-admin">$0</span>
+      </div>
+      <div class="line-item">
+        <div class="d-flex align-items-center">
+          SECURE 2.0 Startup Credit
+          <span class="info-wrap"><button class="info-btn">i</button><div class="tooltip-box">Up to $5,000/yr for 3 years to offset eligible admin costs.</div></span>
+        </div>
+        <span class="credit" id="adv-startup-credit">-$0</span>
+      </div>
+      <div class="line-item" id="adv-autoenroll-row">
+        <div class="d-flex align-items-center">
+          Auto-Enrollment Credit
+          <span class="info-wrap"><button class="info-btn">i</button><div class="tooltip-box">$500/yr for up to 3 years for plans with automatic enrollment.</div></span>
+        </div>
+        <span class="credit" id="adv-autoenroll-credit">-$0</span>
+      </div>
+      <div class="line-total"><span>Net Admin Cost</span><span id="adv-net-admin">$0</span></div>
 
-              </div>
-            </div>
+      <!-- Grand Total -->
+      <div class="grand-total">
+        <span class="fw-bold" style="font-size:16px;">Total Net Out of Pocket</span>
+        <span class="fw-bold" style="font-size:22px;" id="adv-total-oop">$0</span>
+      </div>
+    </div>
 
-            <div class="text-center">
-              <h5 class="fw-semi-bold mb-0">For <span id="totalOutOfPocket-2" style="color: #00A86B;">$0</span> out of pocket, you can provide <span id="employerPlanContributions-2" style="color: #00A86B;">$0</span> of benefits for your employees.</h5>
-            </div>
+    <!-- CLIENT VIEW -->
+    <div id="owner-view" class="d-none">
+      <div class="d-flex flex-column gap-2">
+        <div class="summary-row"><span class="s-label">Retirement Benefits Provided to Employees</span><span class="s-value" style="color:#2563eb;" id="own-gross-contrib">$0</span></div>
+        <div class="summary-row"><span class="s-label">Total Tax Credits Received</span><span class="s-value" style="color:#16a34a;" id="own-total-credits">-$0</span></div>
+        <div class="summary-row"><span class="s-label">Your Total Net Out-of-Pocket Cost</span><span class="s-value" style="color:#0f172a;" id="own-total-oop">$0</span></div>
+      </div>
+      <div class="d-flex gap-3 mt-3">
+        <button class="detail-link" onclick="openPanel('funding')">Funding detail →</button>
+        <button class="detail-link" onclick="openPanel('admin')">Admin detail →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cost/Benefit Callout -->
+  <div class="callout p-3 mb-4 d-flex gap-3 align-items-start">
+    <span style="font-size:22px;flex-shrink:0;">💡</span>
+    <p id="callout-text"></p>
+  </div>
+
+  <!-- CTAs -->
+  <div class="d-flex gap-3 flex-wrap mb-3">
+    <button class="btn btn-primary fw-bold flex-grow-1 py-3" style="font-size:15px;box-shadow:0 2px 8px rgba(37,99,235,.3);">
+      📄 Save &amp; Share Results
+    </button>
+    <button class="btn btn-outline-secondary fw-semibold py-3" style="min-width:140px;font-size:15px;" onclick="previousSection()">
+      ← Back
+    </button>
+  </div>
+
+  <!-- Disclaimer -->
+  <p class="text-center mt-3" style="font-size:11px;color:#94a3b8;line-height:1.6;">
+    This tool provides estimates only and does not constitute tax or legal advice.
+    Actual credits may vary based on plan design and eligibility. Consult a qualified tax professional.
+  </p>
+</div>
+
+
+<!-- ============================================================
+     ADMIN DETAIL PANEL
+     ============================================================ -->
+<div class="panel-backdrop" id="admin-backdrop" onclick="closePanel('admin')"></div>
+<div class="slide-panel" id="admin-panel">
+  <div class="panel-header d-flex justify-content-between align-items-start">
+    <div>
+      <div class="panel-title">Administrative Cost Detail</div>
+      <div class="panel-subtitle" id="admin-panel-subtitle"></div>
+    </div>
+    <button class="panel-close" onclick="closePanel('admin')">✕</button>
+  </div>
+  <div class="panel-body">
+
+    <!-- ADVISOR: Equation Bar -->
+    <div id="admin-advisor-content">
+      <div class="eq-bar">
+        <div class="eq-cell gross"><div class="eq-label">Gross Admin Cost</div><div class="eq-value" id="eq-admin-gross">$0</div></div>
+        <div class="eq-op">−</div>
+        <div class="eq-cell credit"><div class="eq-label">Admin Tax Credits</div><div class="eq-value" id="eq-admin-credit">$0</div></div>
+        <div class="eq-op">=</div>
+        <div class="eq-cell net"><div class="eq-label">Net Admin Cost</div><div class="eq-value" id="eq-admin-net">$0</div></div>
+      </div>
+
+      <div class="section-label">Gross Administrative Costs</div>
+      <div class="line-item">
+        <div class="d-flex align-items-center">Plan Establishment (one-time)<span class="info-wrap"><button class="info-btn">i</button><div class="tooltip-box">One-time cost to establish the plan document.</div></span></div>
+        <span id="det-establish">$0</span>
+      </div>
+      <div class="line-item">
+        <div class="d-flex align-items-center">Annual Admin / Recordkeeping<span class="info-wrap"><button class="info-btn">i</button><div class="tooltip-box" id="tip-annual-admin"></div></span></div>
+        <span id="det-annual-admin">$0</span>
+      </div>
+      <div class="line-item">
+        <div class="d-flex align-items-center">Per-Participant Fees<span class="info-wrap"><button class="info-btn">i</button><div class="tooltip-box" id="tip-per-part"></div></span></div>
+        <span id="det-per-part">$0</span>
+      </div>
+      <div class="line-item">
+        <div class="d-flex align-items-center">Enrollment / Education Fees<span class="info-wrap"><button class="info-btn">i</button><div class="tooltip-box" id="tip-enroll-fee"></div></span></div>
+        <span id="det-enroll-fee">$0</span>
+      </div>
+      <div class="line-total"><span>Total Gross Admin Cost</span><span id="det-gross-admin-total">$0</span></div>
+
+      <div class="section-label">Administrative Tax Credits</div>
+      <div class="line-item"><div class="d-flex align-items-center">SECURE 2.0 Startup Credit<span class="info-wrap"><button class="info-btn">i</button><div class="tooltip-box">Up to $5,000/yr for 3 years to offset eligible startup costs.</div></span></div><span class="credit" id="det-startup-cr">-$0</span></div>
+      <div class="line-item" id="det-autoenroll-row"><div class="d-flex align-items-center">Auto-Enrollment Credit<span class="info-wrap"><button class="info-btn">i</button><div class="tooltip-box">$500/yr for up to 3 years for plans with automatic enrollment.</div></span></div><span class="credit" id="det-autoenroll-cr">-$0</span></div>
+      <div class="line-total"><span>Total Admin Tax Credits</span><span id="det-admin-cr-total">-$0</span></div>
+
+      <div class="section-label">Net Administrative Cost</div>
+      <div class="grand-total mb-3"><span class="fw-bold" style="font-size:16px;">Net Admin Cost to Business</span><span class="fw-bold" style="font-size:20px;" id="det-net-admin">$0</span></div>
+
+      <div class="section-label">Year-by-Year Breakdown</div>
+      <div class="table-responsive mt-2">
+        <table class="table yr-table" id="admin-yr-table">
+          <thead><tr id="admin-yr-thead"></tr></thead>
+          <tbody id="admin-yr-tbody"></tbody>
+          <tfoot><tr id="admin-yr-tfoot"></tr></tfoot>
+        </table>
+      </div>
+
+      <div class="callout p-3 mt-3 d-flex gap-2 align-items-start">
+        <span style="font-size:20px;">💡</span>
+        <p style="font-size:13px;" id="admin-callout-adv"></p>
+      </div>
+    </div>
+
+    <!-- CLIENT: Progressive Reveal -->
+    <div id="admin-client-content" class="d-none">
+      <p style="font-size:14px;color:#64748b;line-height:1.6;" class="mb-3">Here's how tax credits reduce your plan's administrative costs.</p>
+
+      <div class="d-flex flex-column gap-2 mb-3" id="admin-reveal-container">
+        <!-- Step 1: Gross -->
+        <div class="reveal-card gross-card hidden" id="admin-r-gross">
+          <span class="reveal-label">Gross Admin Costs</span>
+          <span class="reveal-value gross-val" id="admin-r-gross-val">$0</span>
+        </div>
+        <!-- Step 2: Credit -->
+        <div class="d-flex align-items-center gap-2 hidden" id="admin-r-credit-row">
+          <span class="reveal-op">−</span>
+          <div class="reveal-card credit-card flex-grow-1">
+            <span class="reveal-label">Tax Credits Applied</span>
+            <span class="reveal-value credit-val" id="admin-r-credit-val">$0</span>
+          </div>
+        </div>
+        <!-- Divider -->
+        <div class="reveal-divider hidden" id="admin-r-divider"></div>
+        <!-- Step 3: Net -->
+        <div class="d-flex align-items-center gap-2 hidden" id="admin-r-net-row">
+          <span class="reveal-op">=</span>
+          <div class="reveal-card net-card flex-grow-1">
+            <span class="reveal-net-label">Your Net Admin Cost</span>
+            <span class="reveal-value net-val" id="admin-r-net-val">$0</span>
           </div>
         </div>
       </div>
 
-      <!-- Results action bar -->
-      <div class="row justify-content-center">
-        <div class="col-12 col-lg-10 col-xl-9">
-          <div id="actionBarCalc" class="mt-4 hidden">
-            <button type="button" class="btn btn-secondary w-100" onclick="previousSection()">Back</button>
+      <div class="d-flex justify-content-center gap-2 mb-3">
+        <button class="btn btn-primary btn-sm fw-semibold" id="admin-reveal-btn" onclick="advanceReveal('admin')" style="display:none;">Show Tax Credits →</button>
+        <button class="btn btn-outline-secondary btn-sm" id="admin-replay-btn" onclick="resetReveal('admin')" style="display:none;">↺ Replay</button>
+      </div>
+
+      <div class="callout p-3 mt-2 d-flex gap-2 align-items-start">
+        <span style="font-size:20px;">💡</span>
+        <p style="font-size:13px;" id="admin-callout-own"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     FUNDING DETAIL PANEL
+     ============================================================ -->
+<div class="panel-backdrop" id="funding-backdrop" onclick="closePanel('funding')"></div>
+<div class="slide-panel" id="funding-panel">
+  <div class="panel-header d-flex justify-content-between align-items-start">
+    <div>
+      <div class="panel-title">Funding Cost Detail</div>
+      <div class="panel-subtitle" id="funding-panel-subtitle"></div>
+    </div>
+    <button class="panel-close" onclick="closePanel('funding')">✕</button>
+  </div>
+  <div class="panel-body">
+
+    <!-- ADVISOR: Equation Bar -->
+    <div id="funding-advisor-content">
+      <div class="eq-bar">
+        <div class="eq-cell gross"><div class="eq-label">Gross Contributions</div><div class="eq-value" id="eq-fund-gross">$0</div></div>
+        <div class="eq-op">−</div>
+        <div class="eq-cell credit"><div class="eq-label">Funding Tax Credit</div><div class="eq-value" id="eq-fund-credit">$0</div></div>
+        <div class="eq-op">=</div>
+        <div class="eq-cell net"><div class="eq-label">Net Funding Cost</div><div class="eq-value" id="eq-fund-net">$0</div></div>
+      </div>
+
+      <div class="section-label">Gross Funding Costs</div>
+      <div class="line-item">
+        <div class="d-flex align-items-center">Employer Plan Contributions<span class="info-wrap"><button class="info-btn">i</button><div class="tooltip-box" id="tip-contributions"></div></span></div>
+        <span id="det-gross-contrib">$0</span>
+      </div>
+      <div class="line-total"><span>Total Gross Funding Cost</span><span id="det-gross-fund-total">$0</span></div>
+
+      <div id="funding-credit-section">
+        <div class="section-label">Funding Tax Credits</div>
+        <div class="line-item"><div class="d-flex align-items-center">SECURE 2.0 Employer Contribution Credit<span class="info-wrap"><button class="info-btn">i</button><div class="tooltip-box">Up to $1,000 per employee per year, phased down over 5 years.</div></span></div><span class="credit" id="det-funding-cr">-$0</span></div>
+        <div class="line-total"><span>Total Funding Tax Credits</span><span id="det-fund-cr-total">-$0</span></div>
+      </div>
+
+      <div class="section-label">Net Funding Cost</div>
+      <div class="grand-total mb-3"><span class="fw-bold" style="font-size:16px;">Net Funding Cost to Business</span><span class="fw-bold" style="font-size:20px;" id="det-net-fund">$0</span></div>
+
+      <div class="section-label">Year-by-Year Breakdown</div>
+      <div class="table-responsive mt-2">
+        <table class="table yr-table" id="funding-yr-table">
+          <thead><tr id="funding-yr-thead"></tr></thead>
+          <tbody id="funding-yr-tbody"></tbody>
+          <tfoot><tr id="funding-yr-tfoot"></tr></tfoot>
+        </table>
+      </div>
+
+      <div class="callout p-3 mt-3 d-flex gap-2 align-items-start">
+        <span style="font-size:20px;">💡</span>
+        <p style="font-size:13px;" id="funding-callout-adv"></p>
+      </div>
+    </div>
+
+    <!-- CLIENT: Progressive Reveal -->
+    <div id="funding-client-content" class="d-none">
+      <p style="font-size:14px;color:#64748b;line-height:1.6;" class="mb-3">Here's how tax credits reduce what it actually costs you to fund your employees' retirement.</p>
+
+      <div class="d-flex flex-column gap-2 mb-3">
+        <div class="reveal-card gross-card hidden" id="funding-r-gross">
+          <span class="reveal-label">Gross Employer Contributions</span>
+          <span class="reveal-value gross-val" id="funding-r-gross-val">$0</span>
+        </div>
+        <div class="d-flex align-items-center gap-2 hidden" id="funding-r-credit-row">
+          <span class="reveal-op">−</span>
+          <div class="reveal-card credit-card flex-grow-1">
+            <span class="reveal-label">SECURE 2.0 Funding Credit</span>
+            <span class="reveal-value credit-val" id="funding-r-credit-val">$0</span>
+          </div>
+        </div>
+        <div class="reveal-divider hidden" id="funding-r-divider"></div>
+        <div class="d-flex align-items-center gap-2 hidden" id="funding-r-net-row">
+          <span class="reveal-op">=</span>
+          <div class="reveal-card net-card flex-grow-1">
+            <span class="reveal-net-label">Your Net Funding Cost</span>
+            <span class="reveal-value net-val" id="funding-r-net-val">$0</span>
           </div>
         </div>
       </div>
+
+      <div class="d-flex justify-content-center gap-2 mb-3">
+        <button class="btn btn-primary btn-sm fw-semibold" id="funding-reveal-btn" onclick="advanceReveal('funding')" style="display:none;">Show Tax Credits →</button>
+        <button class="btn btn-outline-secondary btn-sm" id="funding-replay-btn" onclick="resetReveal('funding')" style="display:none;">↺ Replay</button>
+      </div>
+
+      <div class="callout p-3 mt-2 d-flex gap-2 align-items-start">
+        <span style="font-size:20px;">💡</span>
+        <p style="font-size:13px;" id="funding-callout-own"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
 
     </div>
   </div>
